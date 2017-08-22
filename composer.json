@@ -1,0 +1,19 @@
+{
+    "name": "stmbuy/message-push",
+    "description": "this is uMeng message push server",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "xjliu",
+            "email": "xjliu@snqu.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "UMeng\\": "src/UMeng"
+        }
+    }
+}

@@ -4,7 +4,7 @@ namespace UMeng\Android;
 
 use UMeng\AndroidNotification;
 
-class AndroidFilecast extends AndroidNotification
+class AndroidFileCast extends AndroidNotification
 {
     function __construct()
     {

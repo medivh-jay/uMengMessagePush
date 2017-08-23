@@ -4,12 +4,13 @@ namespace UMeng\Ios;
 
 use UMeng\IOSNotification;
 
-class IOSGroupcast extends IOSNotification
+class IOSListCast extends IOSNotification
 {
     function __construct()
     {
         parent::__construct();
-        $this->data["type"] = "groupcast";
-        $this->data["filter"] = null;
+        $this->data["type"] = "listcast";
+        $this->data["device_tokens"] = null;
     }
+
 }

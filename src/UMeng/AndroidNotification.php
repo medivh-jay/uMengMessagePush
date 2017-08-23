@@ -34,13 +34,17 @@ abstract class AndroidNotification extends UmengNotification
     // Keys can be set in the payload level
     protected $PAYLOAD_KEYS = ["display_type"];
 
-    // Keys can be set in the body level
+    /**
+     * 可以被设置的key
+     * @var array
+     */
     protected $BODY_KEYS = [
         "ticker",
         "title",
         "text",
         "builder_id",
-        "icon", "largeIcon",
+        "icon",
+        "largeIcon",
         "img",
         "play_vibrate",
         "play_lights",

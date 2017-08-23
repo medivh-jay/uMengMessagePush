@@ -8,10 +8,10 @@
 namespace UMeng\PushFactory;
 
 use UMeng\Android\AndroidBroadcast;
-use UMeng\Android\AndroidCustomizedcast;
-use UMeng\Android\AndroidFilecast;
-use UMeng\Android\AndroidGroupcast;
-use UMeng\Android\AndroidUnicast;
+use UMeng\Android\AndroidCustomizedCast;
+use UMeng\Android\AndroidFileCast;
+use UMeng\Android\AndroidGroupCast;
+use UMeng\Android\AndroidUniCast;
 
 class Android implements PushInterface
 {
@@ -26,7 +26,7 @@ class Android implements PushInterface
         $this->timestamp = strval(time());
     }
 
-    public function sendBroadCast($ticker, $title, $text, $afterOpen, array $customs = [], $debug = false)
+    public function sendBroadCast($ticker, $title, $text, $afterOpen, array $customs = [], $isFormal = true)
     {
         try {
             $broCast = new AndroidBroadcast();
@@ -39,7 +39,7 @@ class Android implements PushInterface
             $broCast->setPredefinedKeyValue("after_open", $afterOpen);
             // Set 'production_mode' to 'false' if it's a test device.
             // For how to register a test device, please see the developer doc.
-            $broCast->setPredefinedKeyValue("production_mode", $debug);
+            $broCast->setPredefinedKeyValue("production_mode", $isFormal);
             // [optional]Set extra fields
             foreach ( $customs as $key => $value ){
                 $broCast->setExtraField($key, $value);
@@ -52,10 +52,10 @@ class Android implements PushInterface
         }
     }
 
-    public function sendUniCast($deviceTokens, $ticker, $title, $text, array $customs = [], $afterOpen, $debug = false)
+    public function sendUniCast($deviceTokens, $ticker, $title, $text, $afterOpen, array $customs = [], $isFormal = true)
     {
         try {
-            $uniCast = new AndroidUnicast();
+            $uniCast = new AndroidUniCast();
             $uniCast->setAppMasterSecret($this->appMasterSecret);
             $uniCast->setPredefinedKeyValue("appkey", $this->appKey);
             $uniCast->setPredefinedKeyValue("timestamp", $this->timestamp);
@@ -67,7 +67,7 @@ class Android implements PushInterface
             $uniCast->setPredefinedKeyValue("after_open", $afterOpen);
             // Set 'production_mode' to 'false' if it's a test device.
             // For how to register a test device, please see the developer doc.
-            $uniCast->setPredefinedKeyValue("production_mode", $debug);
+            $uniCast->setPredefinedKeyValue("production_mode", $isFormal);
             // Set extra fields
             foreach ( $customs as $key => $value ){
                 $uniCast->setExtraField($key, $value);
@@ -83,7 +83,7 @@ class Android implements PushInterface
     public function sendFileCast($ticker, $title, $text, $afterOpen)
     {
         try {
-            $fileCast = new AndroidFilecast();
+            $fileCast = new AndroidFileCast();
             $fileCast->setAppMasterSecret($this->appMasterSecret);
             $fileCast->setPredefinedKeyValue("appkey", $this->appKey);
             $fileCast->setPredefinedKeyValue("timestamp", $this->timestamp);
@@ -102,10 +102,10 @@ class Android implements PushInterface
         }
     }
 
-    public function sendGroupCast($filter, $ticker, $title, $text, $afterOpen, $debug = false)
+    public function sendGroupCast($filter, $ticker, $title, $text, $afterOpen, $isFormal = true)
     {
         try {
-            $groupCast = new AndroidGroupcast();
+            $groupCast = new AndroidGroupCast();
             $groupCast->setAppMasterSecret($this->appMasterSecret);
             $groupCast->setPredefinedKeyValue("appkey", $this->appKey);
             $groupCast->setPredefinedKeyValue("timestamp", $this->timestamp);
@@ -117,7 +117,7 @@ class Android implements PushInterface
             $groupCast->setPredefinedKeyValue("after_open", $afterOpen);
             // Set 'production_mode' to 'false' if it's a test device.
             // For how to register a test device, please see the developer doc.
-            $groupCast->setPredefinedKeyValue("production_mode", $debug);
+            $groupCast->setPredefinedKeyValue("production_mode", $isFormal);
             print("Sending groupcast notification, please wait...\r\n");
             $groupCast->send();
             print("Sent SUCCESS\r\n");
@@ -129,7 +129,7 @@ class Android implements PushInterface
     public function sendCustomizedCast($alias, $aliasType, $ticker, $title, $text, $afterOpen)
     {
         try {
-            $customizedCast = new AndroidCustomizedcast();
+            $customizedCast = new AndroidCustomizedCast();
             $customizedCast->setAppMasterSecret($this->appMasterSecret);
             $customizedCast->setPredefinedKeyValue("appkey", $this->appKey);
             $customizedCast->setPredefinedKeyValue("timestamp", $this->timestamp);
@@ -154,7 +154,7 @@ class Android implements PushInterface
     public function sendCustomizedCastFileId($uploadContent, $aliasType, $ticker, $title, $test, $afterOpen)
     {
         try {
-            $customizedCast = new AndroidCustomizedcast();
+            $customizedCast = new AndroidCustomizedCast();
             $customizedCast->setAppMasterSecret($this->appMasterSecret);
             $customizedCast->setPredefinedKeyValue("appkey", $this->appKey);
             $customizedCast->setPredefinedKeyValue("timestamp", $this->timestamp);

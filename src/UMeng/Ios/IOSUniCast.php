@@ -4,7 +4,7 @@ namespace UMeng\Ios;
 
 use UMeng\IOSNotification;
 
-class IOSUnicast extends IOSNotification
+class IOSUniCast extends IOSNotification
 {
     function __construct()
     {

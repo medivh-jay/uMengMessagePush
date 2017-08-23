@@ -4,16 +4,24 @@ namespace UMeng\Ios;
 
 use UMeng\IOSNotification;
 
-class IOSFilecast extends IOSNotification
+class IOSCustomizedCast extends IOSNotification
 {
+
     function __construct()
     {
         parent::__construct();
-        $this->data["type"] = "filecast";
-        $this->data["file_id"] = null;
+        $this->data["type"] = "customizedcast";
+        $this->data["alias_type"] = null;
     }
 
-    //return file_id if SUCCESS, else throw Exception with details.
+    function isComplete()
+    {
+        parent::isComplete();
+        if (!array_key_exists("alias", $this->data) && !array_key_exists("file_id", $this->data))
+            throw new \Exception("You need to set alias or upload file for customizedcast!");
+    }
+
+    // Upload file with device_tokens or alias to Umeng
     function uploadContents($content)
     {
         if ($this->data["appkey"] == null)
@@ -23,11 +31,10 @@ class IOSFilecast extends IOSNotification
         if (!is_string($content))
             throw new \Exception("content should be a string!");
 
-        $post = [
-            "appkey" => $this->data["appkey"],
+        $post = array("appkey" => $this->data["appkey"],
             "timestamp" => $this->data["timestamp"],
             "content" => $content
-        ];
+        );
         $url = $this->host . $this->uploadPath;
         $postBody = json_encode($post);
         $sign = md5("POST" . $url . $postBody . $this->appMasterSecret);
@@ -45,7 +52,7 @@ class IOSFilecast extends IOSNotification
         $curlErr = curl_error($ch);
         curl_close($ch);
         print($result . "\r\n");
-        if ($httpCode == "0") //time out 
+        if ($httpCode == "0") //time out
             throw new \Exception("Curl error number:" . $curlErrNo . " , Curl error details:" . $curlErr . "\r\n");
         else if ($httpCode != "200") //we did send the notifition out and got a non-200 response
             throw new \Exception("http code:" . $httpCode . " details:" . $result . "\r\n");
@@ -56,11 +63,11 @@ class IOSFilecast extends IOSNotification
             $this->data["file_id"] = $returnData["data"]["file_id"];
     }
 
+
     function getFileId()
     {
         if (array_key_exists("file_id", $this->data))
             return $this->data["file_id"];
         return null;
     }
-
 }

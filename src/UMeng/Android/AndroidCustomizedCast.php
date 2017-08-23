@@ -4,7 +4,12 @@ namespace UMeng\Android;
 
 use UMeng\AndroidNotification;
 
-class AndroidCustomizedcast extends AndroidNotification
+/**
+ * 通过开发者自有的alias进行推送
+ * Class AndroidCustomizedCast
+ * @package UMeng\Android
+ */
+class AndroidCustomizedCast extends AndroidNotification
 {
 
     function __construct()

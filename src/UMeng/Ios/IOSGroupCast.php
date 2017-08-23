@@ -1,10 +1,10 @@
 <?php
 
-namespace UMeng\Android;
+namespace UMeng\Ios;
 
-use UMeng\AndroidNotification;
+use UMeng\IOSNotification;
 
-class AndroidGroupcast extends AndroidNotification
+class IOSGroupCast extends IOSNotification
 {
     function __construct()
     {
